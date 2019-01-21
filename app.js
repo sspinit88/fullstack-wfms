@@ -31,4 +31,4 @@ app.use('/api/order', orderRoutes);
 app.use('/api/position', positionRoutes);
 
 
-module.exports = app
+module.exports = app;
