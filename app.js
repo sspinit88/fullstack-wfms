@@ -17,6 +17,8 @@ mongoose.connect(keys.mongoURI, {useNewUrlParser: true, useCreateIndex: true})
 app.use(passport.initialize());
 require('./middlewar/passport')(passport);
 
+app.use('/uploads', express.static('uploads'));
+
 app.use(require('morgan')('dev'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
