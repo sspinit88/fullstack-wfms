@@ -9,6 +9,7 @@ import {SiteLayoutComponent} from './shared/layouts/site-layout/site-layout.comp
 import {RegisterPageComponent} from './register-page/register-page.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
+import {AuthService} from "./shared/services/auth.service";
 
 @NgModule({
   declarations: [
