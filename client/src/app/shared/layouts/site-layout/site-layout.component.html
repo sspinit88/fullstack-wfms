@@ -2,7 +2,7 @@
 <ul class="sidenav sidenav-fixed a-sidenav">
   <h4>Newborn</h4>
   <li class="bold"
-      *ngFor="let link of links"
+      *ngFor="let link of links; trackBy: trackByFn"
       routerLinkActive="active">
     <a class="waves-effect waves-orange"
        [routerLink]="[link.url]">
@@ -75,7 +75,17 @@
     <i class="large material-icons">add</i>
   </a>
   <ul>
-    <li><a class="btn-floating green"><i class="material-icons">assignment</i></a></li>
-    <li><a class="btn-floating blue"><i class="material-icons">list</i></a></li>
+    <li>
+      <a class="btn-floating green"
+          [routerLink]="['/site', 'order']">
+        <i class="material-icons">assignment</i>
+      </a>
+    </li>
+    <li>
+      <a class="btn-floating blue"
+         [routerLink]="['/site', 'categories']">
+        <i class="material-icons">list</i>
+      </a>
+    </li>
   </ul>
 </div>
