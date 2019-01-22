@@ -12,7 +12,7 @@
     <div class="collection"
           *ngIf="categories.length !== 0; else empty">
       <a class="collection-item"
-          *ngFor="let category of categories; trackBy:trackByFn"
+          *ngFor="let category of categories;"
           [routerLink]="['/site', 'categories', category._id]">
         {{category.name}}
       </a>
@@ -27,7 +27,7 @@
 <ng-template #empty>
   <div class="center">
     <p>
-      Нет ни одной категории.
+      Нет категорий.
     </p>
   </div>
 </ng-template>

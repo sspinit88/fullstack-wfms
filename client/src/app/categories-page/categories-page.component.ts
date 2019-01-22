@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CategoriesService} from "../shared/services/categories.service";
 import {CategoryModel} from "../shared/models/category.model";
 import {Observable} from "rxjs/index";
@@ -20,9 +20,8 @@ export class CategoriesPageComponent implements OnInit {
   // categories$ - $ означает, что данная переменная явлю rxjs-стримом и является асинхронной
   categories$: Observable<CategoryModel[]>;
 
-  constructor(
-      private categoriesService: CategoriesService,
-  ) {}
+  constructor(private categoriesService: CategoriesService,) {
+  }
 
   ngOnInit() {
     // work with loader
@@ -36,10 +35,6 @@ export class CategoriesPageComponent implements OnInit {
     // });
 
     this.categories$ = this.categoriesService.fetch();
-  }
-
-  trackByFn(index, item) {
-    return item.id;
   }
 
 }
