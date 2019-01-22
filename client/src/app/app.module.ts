@@ -26,7 +26,9 @@ import {AuthService} from "./shared/services/auth.service";
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    AuthService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

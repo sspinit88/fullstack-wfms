@@ -1,16 +1,52 @@
-<div class="card">
+<form class="card"
+      [formGroup]="form"
+      (ngSubmit)="onSubmit()">
   <div class="card-content">
-    <span class="card-title">Создать аккаунт</span>
+    <span class="card-title">
+      Создать аккаунт
+    </span>
     <div class="input-field">
-      <input id="email" type="email" required>
-      <label for="email">Email:</label>
+      <input id="email"
+             type="email"
+             formControlName="email">
+      <label for="email">
+        Email:
+      </label>
+      <span class="helper-text"
+            [ngClass]="{'red-text': form.get('email').invalid && form.get('email').touched}"
+            *ngIf="form.get('email').invalid && form.get('email').touched">
+        <span *ngIf="form.get('email')['errors']['required']">
+          Поле должно быть заполненно!
+        </span>
+        <span *ngIf="form.get('email')['errors']['email']">
+          Поле некорректно заполненно!
+        </span>
+      </span>
     </div>
     <div class="input-field">
-      <input id="password" type="password" required>
-      <label for="password">Пароль:</label>
+      <input id="password"
+             type="password"
+             formControlName="password">
+      <label for="password">
+        Пароль:
+      </label>
+      <span class="helper-text"
+            [ngClass]="{'red-text': form.get('password').invalid && form.get('password').touched}"
+            *ngIf="form.get('password').invalid && form.get('password').touched">
+        <span *ngIf="form.get('password')['errors']['required']">
+          Поле должно быть заполненно!
+        </span>
+        <span *ngIf="form.get('password')['errors']['minlength']">
+          Введите минимум {{form.get('password')['errors']['minlength']['requiredLength']}} символов. <br>
+          Введено {{form.get('password')['errors']['minlength']['actualLength']}} символов.
+        </span>
+      </span>
     </div>
   </div>
   <div class="card-action">
-    <button class="modal-action btn waves-effect">Создать</button>
+    <button class="modal-action btn waves-effect"
+    [disabled]="form.invalid || form.disabled">
+      Создать
+    </button>
   </div>
-</div>
+</form>

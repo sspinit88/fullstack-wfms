@@ -17,7 +17,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
   constructor(
       private authService: AuthService,
       // private router = Router,
-      // private activatedRoute: ActivatedRoute,
+      private activatedRoute: ActivatedRoute,
   ) {
   }
 
@@ -40,15 +40,15 @@ export class LoginPageComponent implements OnInit, OnDestroy {
       )
     });
 
-    // this.activatedRoute.queryParams.subscribe(
-    //     (params: Params) => {
-    //       if (params['registred']) {
-    //         // можете войти в систему, используя свои данные
-    //       } else if (params['accsessDenied']){
-    //         // для начала нужно авторизоваться в системе
-    //       }
-    //     }
-    // )
+    this.activatedRoute.queryParams.subscribe(
+        (params: Params) => {
+          if (params['registered']) {
+            // можете войти в систему, используя свои данные
+          } else if (params['accsessDenied']){
+            // для начала нужно авторизоваться в системе
+          }
+        }
+    )
   }
 
   ngOnDestroy() {

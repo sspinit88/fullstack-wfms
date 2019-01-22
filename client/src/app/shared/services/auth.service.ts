@@ -4,9 +4,7 @@ import {Observable} from "rxjs";
 import {tap} from "rxjs/operators";
 import {UserModel} from "../models/user.model";
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class AuthService {
 
   private token = null;
@@ -21,7 +19,7 @@ export class AuthService {
         .pipe(
             tap( // tap - позволяет занести значение получаемого токена в переменную token
                 ({token}) => { // получаем объект с полем token
-                  console.log('token:', {token});
+                  // console.log('token:', {token});
 
                   localStorage.setItem('auth-token', token);
                   this.setToken(token);
@@ -47,9 +45,7 @@ export class AuthService {
     localStorage.clear;
   }
 
-  register() {
-
+  register(user: UserModel): Observable<UserModel> {
+    return this.http.post<UserModel>('/api/auth/register', user);
   }
-
-
 }
