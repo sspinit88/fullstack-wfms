@@ -3,6 +3,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../shared/services/auth.service";
 import {Subscription} from "rxjs/internal/Subscription";
 import {ActivatedRoute, Router, Params} from "@angular/router";
+import {MaterialService} from "../shared/classes/material.service";
 
 @Component({
   selector: 'app-login-page',
@@ -16,8 +17,8 @@ export class LoginPageComponent implements OnInit, OnDestroy {
 
   constructor(
       private authService: AuthService,
-      // private router = Router,
       private activatedRoute: ActivatedRoute,
+      private router: Router,
   ) {
   }
 
@@ -44,8 +45,13 @@ export class LoginPageComponent implements OnInit, OnDestroy {
         (params: Params) => {
           if (params['registered']) {
             // можете войти в систему, используя свои данные
+            MaterialService.toast('Войдите в систему используя свои данные.');
           } else if (params['accsessDenied']){
             // для начала нужно авторизоваться в системе
+            MaterialService.toast('Для входа в систему необходимо провести авторизацию.');
+          } else if (params['sessionFailed']) {
+            // время сессии истекло, войдите повторно
+            MaterialService.toast('Время сессии истекло, для продолжнения работы войдите в систему повторно.');
           }
         }
     )
@@ -69,10 +75,11 @@ export class LoginPageComponent implements OnInit, OnDestroy {
 
     this.aSub = this.authService.login(user).subscribe(
         () => {
-          // this.router.navigate(['/overview']);
+          this.router.navigate(['/site', 'overview']);
         },
         (error) => {
-          console.warn('error');
+          // console.warn('error');
+          MaterialService.toast(error.error.message);
           this.form.enable(); // разблокируем форму, если вернет ошибку
         },
     );

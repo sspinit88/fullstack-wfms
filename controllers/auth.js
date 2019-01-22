@@ -10,11 +10,9 @@ module.exports.login = async function(req, res) {
   if (candidate) {
     // Проверка пароля, пользователь существует
 
-    // в if пришлось прописать !passwordResult, так как приходит false, при одинаковых паролях
-    // по сути, работает некорректно
-    // const passwordResult = bcrypt.compareSync(candidate.password, req.body.password);
+    const passwordResult = bcrypt.compareSync(req.body.password, candidate.password);
 
-    if (candidate.password === req.body.password) {
+    if (passwordResult) {
       // Генерация токена, пароли совпали
       const token = jwt.sign({
         email: candidate.email,
@@ -41,7 +39,7 @@ module.exports.login = async function(req, res) {
 
 module.exports.register = async function(req, res) {
   // email password
-  const candidate = await User.findOne({email: req.body.email})
+  const candidate = await User.findOne({email: req.body.email});
 
   if (candidate) {
     // Пользователь существует, нужно отправить ошибку

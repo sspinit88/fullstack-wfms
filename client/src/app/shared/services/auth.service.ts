@@ -4,7 +4,9 @@ import {Observable} from "rxjs";
 import {tap} from "rxjs/operators";
 import {UserModel} from "../models/user.model";
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class AuthService {
 
   private token = null;
@@ -15,7 +17,7 @@ export class AuthService {
   }
 
   login(user: UserModel): Observable<{ token: string }> { // вернет с сервера
-    return this.http.post<{ token: string }>('/api/auth/login', user)
+    return this.http.post<{token: string}>('/api/auth/login', user)
         .pipe(
             tap( // tap - позволяет занести значение получаемого токена в переменную token
                 ({token}) => { // получаем объект с полем token
@@ -42,7 +44,7 @@ export class AuthService {
 
   logout() {
     this.setToken(null);
-    localStorage.clear;
+    window.localStorage.clear();
   }
 
   register(user: UserModel): Observable<UserModel> {
