@@ -12,8 +12,7 @@ export class TokenInterceptor implements HttpInterceptor {
 
   constructor(
       private authService: AuthService,
-      private router: Router,
-  ) {
+      private router: Router,) {
   }
 
   // перехватывает все запросы типа HttpRequest<any>
