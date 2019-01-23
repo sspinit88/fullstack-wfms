@@ -13,4 +13,8 @@ export class CategoriesService {
   fetch(): Observable<CategoryModel[]> {
     return this.http.get<CategoryModel[]>('api/category');
   }
+
+  getCategoryById (id: string): Observable<CategoryModel> {
+    return this.http.get<CategoryModel>(`/api/category/${id}`)
+  }
 }
