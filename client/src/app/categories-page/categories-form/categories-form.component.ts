@@ -1,10 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Params} from "@angular/router";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {CategoriesService} from "../../shared/services/categories.service";
 import {switchMap} from "rxjs/operators";
 import {of} from "rxjs/internal/observable/of";
 import {MaterialService} from "../../shared/classes/material.service";
+import {CategoryModel} from "../../shared/models/category.model";
 
 @Component({
   selector: 'app-categories-form',
@@ -16,6 +17,11 @@ export class CategoriesFormComponent implements OnInit {
   form: FormGroup;
   // по умолчанию режим добавления
   isNew = true;
+  image: File;
+  imagePreview: string = '';
+  category: CategoryModel;
+
+  @ViewChild('input') inputRef: ElementRef;
 
 
   constructor(
@@ -29,6 +35,8 @@ export class CategoriesFormComponent implements OnInit {
     this.form = new FormGroup({
       'name': new FormControl(null, Validators.required),
     });
+
+    this.form.disable();
 
     // старый подход
     // this.activatedRoute.params.subscribe((params: Params) => {
@@ -53,20 +61,70 @@ export class CategoriesFormComponent implements OnInit {
                 }
             )
         ).subscribe(
-          category => {
-            if (category) {
-              this.form.patchValue({name: category.name});
-              // исправляем ошибку отображения label
-              MaterialService.updateTextInputs();
-            }
-          },
-          error => MaterialService.toast(error),
-        );
+        category => {
+          if (category) {
+            this.form.patchValue({name: category.name});
+            this.category = category;
+            // превью картинки
+            this.imagePreview = category.imageSrc;
+            // исправляем ошибку отображения label
+            MaterialService.updateTextInputs();
+          }
+          this.form.enable();
+        },
+        error => MaterialService.toast(error),
+    );
+  }
+
+  triggerClick() {
+    // обращаемся к референции, вешаем клик и реализуем
+    // функцилнал input для получения файла
+    this.inputRef.nativeElement.click()
+  }
+
+  // метод будет вызываться, если будет выбран файл (реагирует на изменение)
+  onFileUpload(event: any) {
+    // получаем элемент
+    const file = event.target.files[0];
+    this.image = file;
+
+    // раелизуем превью
+    const reader = new FileReader();
+
+    // добавляем прослушку событий на reader
+    reader.onload = () => {
+      // кладем результат в imagePreview
+      this.imagePreview = reader.result;
+    };
+    // даем указание ридеру, что бы он прочитал file.
+    reader.readAsDataURL(file);
   }
 
   onSubmit() {
-    console.log(this.form);
-  }
+    let obs$;
 
+    this.form.disable();
+
+    if (this.isNew) {
+      // create
+      obs$ = this.categoriesService.create(this.form.value.name, this.image);
+    } else {
+      // update
+      obs$ = this.categoriesService.update(this.category._id, this.form.value.name, this.image);
+    }
+
+    obs$.subscribe(
+        category => {
+          this.category = category;
+          MaterialService.toast('Изменения сохранены');
+          this.form.enable();
+        },
+        error => {
+          MaterialService.toast(error.error.message);
+          this.form.enable();
+        }
+    );
+
+  }
 
 }

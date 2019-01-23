@@ -14,7 +14,35 @@ export class CategoriesService {
     return this.http.get<CategoryModel[]>('api/category');
   }
 
-  getCategoryById (id: string): Observable<CategoryModel> {
+  getCategoryById(id: string): Observable<CategoryModel> {
     return this.http.get<CategoryModel>(`/api/category/${id}`)
+  }
+
+  // создание новой категории
+  create(name: string, image?: File): Observable<CategoryModel> {
+
+    const fd = new FormData();
+
+    if (image) {
+      fd.append('image', image, image.name);
+    }
+
+    fd.append('name', name);
+
+    return this.http.post<CategoryModel>('/api/category', fd);
+  }
+
+  // обновление категории
+  update(id: string, name: string, image?: File): Observable<CategoryModel> {
+
+    const fd = new FormData();
+
+    if (image) {
+      fd.append('image', image, image.name);
+    }
+
+    fd.append('name', name);
+    console.log(id, name, image);
+    return this.http.patch<CategoryModel>(`/api/category/${id}`, fd);
   }
 }
