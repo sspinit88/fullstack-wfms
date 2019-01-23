@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {CategoryModel} from "../models/category.model";
 import {Observable} from "rxjs/index";
+import {MessageModel} from "../models/message.model";
 
 @Injectable()
 export class CategoriesService {
@@ -45,4 +46,11 @@ export class CategoriesService {
     console.log(id, name, image);
     return this.http.patch<CategoryModel>(`/api/category/${id}`, fd);
   }
+
+
+  // удаление категории
+  delete(id: string): Observable<MessageModel> {
+    return this.http.delete<MessageModel>(`/api/category/${id}`);
+  }
+
 }

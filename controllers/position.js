@@ -30,7 +30,7 @@ module.exports.create = async function (req, res) {
 module.exports.remove = async function (req, res) {
   try {
     await Position.remove({
-      id: req.params._id,
+      _id: req.params.id,
     });
     res.status(200).json({
       message: 'Позиция была удалена.',
@@ -44,7 +44,7 @@ module.exports.update = async function (req, res) {
   try {
     const position = await Position.findOneAndUpdate(
         {
-          id: req.params.id,
+          _id: req.params.id,
         },
         {
           $set: req.body,
