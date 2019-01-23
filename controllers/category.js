@@ -5,9 +5,7 @@ const Position = require('../models/Position');
 
 exports.getAll = async function (req, res) {
   try {
-    const categories = await Category.find({
-      user: req.user.id,
-    });
+    const categories = await Category.find({user: req.user.id});
     res.status(200).json(categories);
   } catch (e) {
     errorHandler(res, e);
@@ -25,12 +23,8 @@ module.exports.getById = async function (req, res) {
 
 module.exports.remove = async function (req, res) {
   try {
-    await Category.remove({
-      id: req.params.id
-    });
-    await Position.remowe({
-      category: req.params.id,
-    });
+    await Category.remove({_id: req.params.id});
+    await Position.remowe({category: req.params.id});
     res.status(200).json({
       message: 'Категория удалена.',
     });
