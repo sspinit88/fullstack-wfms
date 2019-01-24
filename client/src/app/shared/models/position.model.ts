@@ -4,7 +4,8 @@ export class PositionModel {
       public cost: number,
       public category: string,
       public user?: string,
-      public _id?: string
+      public _id?: string,
+      public quantity?: number,
   ) {
 
   }
