@@ -10,7 +10,7 @@ export class CategoriesService {
   constructor(private http: HttpClient,) {
   }
 
-  // будем получать имеющиеся категории
+  // будем получать все имеющиеся категории
   fetch(): Observable<CategoryModel[]> {
     return this.http.get<CategoryModel[]>('api/category');
   }
@@ -46,7 +46,6 @@ export class CategoriesService {
     console.log(id, name, image);
     return this.http.patch<CategoryModel>(`/api/category/${id}`, fd);
   }
-
 
   // удаление категории
   delete(id: string): Observable<MessageModel> {
