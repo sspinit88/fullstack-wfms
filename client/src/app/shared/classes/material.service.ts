@@ -1,4 +1,5 @@
 import {ElementRef} from "@angular/core";
+import {MaterialWindowModel} from "../models/materialWindow.model";
 
 declare var M;
 
@@ -16,7 +17,7 @@ export class MaterialService {
     M.updateTextFields();
   }
 
-  static initModal(elem: ElementRef) {
+  static initModal(elem: ElementRef): MaterialWindowModel {
     return M.Modal.init(elem.nativeElement);
   }
 
