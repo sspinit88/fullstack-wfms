@@ -19,14 +19,14 @@ export class OrderPageComponent implements OnInit, OnDestroy, AfterViewInit {
 
   constructor(
       private router: Router,
-      private orderService: OrderService,
+      public orderService: OrderService,
   ) {
   }
 
   ngOnInit() {
     this.isRoot = this.router.url === '/site/order';
     // подписываемся на прослушку событий роута (переход на другой адрес)
-    this.router.events.subscribe((e: Event) => {
+    this.router.events.subscribe((e) => {
           // является ли событие свойством метода?
           if (e instanceof NavigationEnd) {
             this.isRoot = this.router.url === '/site/order';

@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core'
 import {PositionsService} from "../../../shared/services/positions.service";
 import {PositionModel} from "../../../shared/models/position.model";
 import {MaterialService} from "../../../shared/classes/material.service";
@@ -13,7 +13,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 export class PositionsFormComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Input('categoryId') categoryId: string;
-  @ViewChild('modal') modalRef: ElemtntRef;
+  @ViewChild('modal') modalRef: ElementRef;
 
   positions: PositionModel[] = [];
   isLoading: boolean = false;

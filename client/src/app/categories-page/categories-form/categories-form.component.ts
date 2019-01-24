@@ -18,7 +18,7 @@ export class CategoriesFormComponent implements OnInit {
   // по умолчанию режим добавления
   isNew = true;
   image: File;
-  imagePreview: string = '';
+  imagePreview: any = '';
   category: CategoryModel;
 
   @ViewChild('input') inputRef: ElementRef;
