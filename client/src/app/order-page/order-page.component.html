@@ -51,12 +51,13 @@
   <div class="modal-footer">
     <button
             class="modal-action waves-effect waves-black btn-flat"
+            [disabled]="pending"
             (click)="cancel()"
     >Отмена
     </button>
     <button
             class="modal-action btn waves-effect"
-            [disabled]="order.list.length === 0"
+            [disabled]="order.list.length === 0 || pending"
             (click)="submit()">
       Подтвердить
     </button>

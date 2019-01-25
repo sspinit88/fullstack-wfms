@@ -23,6 +23,7 @@ import {PositionsFormComponent} from './categories-page/categories-form/position
 import {PositionsService} from "./shared/services/positions.service";
 import {OrderCategoriesComponent} from './order-page/order-categories/order-categories.component';
 import {OrderPositionsComponent} from './order-page/order-positions/order-positions.component';
+import {OrdersService} from "./shared/services/orders.service";
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import {OrderPositionsComponent} from './order-page/order-positions/order-positi
     AuthGuard,
     CategoriesService,
     PositionsService,
+    OrdersService,
     {
       provide: HTTP_INTERCEPTORS,
       multi: true,
