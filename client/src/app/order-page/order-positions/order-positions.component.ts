@@ -17,7 +17,7 @@ export class OrderPositionsComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private positionsService: PositionsService,
-              private order: OrderService) {
+              private orderService: OrderService) {
   }
 
   ngOnInit() {
@@ -40,8 +40,8 @@ export class OrderPositionsComponent implements OnInit {
   }
 
   addToOrder(position: PositionModel) {
+    this.orderService.add(position);
     MaterialService.toast(`Добавлено x${position.quantity}`);
-    this.order.add(position)
   }
 
 }

@@ -4,18 +4,21 @@ import {MaterialService} from '../shared/classes/material.service'
 import {OrderService} from './order.service'
 import {OrderPositionModel} from "../shared/models/order-position.model";
 import {MaterialWindowModel} from "../shared/models/materialWindow.model";
-
+import {Subscription} from "rxjs/internal/Subscription";
+import {combineLatest} from "rxjs/internal/observable/combineLatest";
 
 @Component({
   selector: 'app-order-page',
   templateUrl: './order-page.component.html',
   providers: [OrderService]
 })
+
 export class OrderPageComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @ViewChild('modal') modalRef: ElementRef;
   modal: MaterialWindowModel;
   isRoot: boolean;
+  aSub: Subscription;
 
   constructor(private router: Router,
               private order: OrderService) {
@@ -27,7 +30,8 @@ export class OrderPageComponent implements OnInit, OnDestroy, AfterViewInit {
       if (event instanceof NavigationEnd) {
         this.isRoot = this.router.url === '/site/order';
       }
-    })
+    });
+
   }
 
   ngOnDestroy() {
@@ -39,7 +43,7 @@ export class OrderPageComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   removePosition(orderPosition: OrderPositionModel) {
-    // this.order.remove(orderPosition)
+    this.order.remove(orderPosition)
   }
 
   open() {

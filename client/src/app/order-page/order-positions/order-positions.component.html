@@ -24,7 +24,7 @@
         <button
           class="btn waves-effect wavers-light btn-small"
           (click)="addToOrder(position)"
-          [disabled]="!position.quantity"
+          [disabled]="!position.quantity || position.quantity <= 0"
         >Добавить</button>
       </td>
     </tr>

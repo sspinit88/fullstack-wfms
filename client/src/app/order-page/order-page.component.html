@@ -7,15 +7,14 @@
   </h4>
   <button
           class="waves-effect btn grey darken-1"
-          (click)="open()"
           [disabled]="order.list.length === 0"
+          (click)="open()"
   >
     Завершить
   </button>
 </div>
 
 <router-outlet></router-outlet>
-
 
 <div #modal
      class="modal modal-fixed-footer">
@@ -57,9 +56,9 @@
     </button>
     <button
             class="modal-action btn waves-effect"
-            (click)="submit()"
             [disabled]="order.list.length === 0"
-    >Подтвердить
+            (click)="submit()">
+      Подтвердить
     </button>
   </div>
 </div>
