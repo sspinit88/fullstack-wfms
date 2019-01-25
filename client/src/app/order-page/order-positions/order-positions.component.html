@@ -17,31 +17,25 @@
       <td>{{position.cost}} руб.</td>
       <td>
         <div class="input-field inline order-position-input">
-          <input [(ngModel)]="position.quantity"
-                 type="number"
-                 min="1">
+          <input type="number" value="1" min="1" [(ngModel)]="position.quantity">
         </div>
       </td>
       <td>
-        <button class="btn waves-effect wavers-light btn-small"
-                (click)="addOrder(position)"
-                [disabled]="!position.quantity">
-          Добавить
-        </button>
+        <button
+          class="btn waves-effect wavers-light btn-small"
+          (click)="addToOrder(position)"
+          [disabled]="!position.quantity"
+        >Добавить</button>
       </td>
     </tr>
     </tbody>
   </table>
 
   <ng-template #empty>
-    <div class="center">
-      В данной категории нет позиций.
-    </div>
+    <div class="center">В данной категории пока нет позиций.</div>
   </ng-template>
-
 </div>
 
 <ng-template #loader>
   <app-loader></app-loader>
 </ng-template>
-

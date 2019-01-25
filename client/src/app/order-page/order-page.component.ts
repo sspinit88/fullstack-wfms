@@ -1,59 +1,57 @@
-import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {NavigationEnd, Router} from "@angular/router";
-import {MaterialService} from "../shared/classes/material.service";
+import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core'
+import {Router, NavigationEnd} from '@angular/router'
+import {MaterialService} from '../shared/classes/material.service'
+import {OrderService} from './order.service'
+import {OrderPositionModel} from "../shared/models/order-position.model";
 import {MaterialWindowModel} from "../shared/models/materialWindow.model";
-import {OrderService} from "./order.service";
+
 
 @Component({
   selector: 'app-order-page',
   templateUrl: './order-page.component.html',
-  styleUrls: ['./order-page.component.scss'],
-  providers: [OrderService],
+  providers: [OrderService]
 })
 export class OrderPageComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @ViewChild('modal') modalRef: ElementRef;
-
-  isRoot: boolean;
   modal: MaterialWindowModel;
+  isRoot: boolean;
 
-  constructor(
-      private router: Router,
-      public orderService: OrderService,
-  ) {
+  constructor(private router: Router,
+              private order: OrderService) {
   }
 
   ngOnInit() {
     this.isRoot = this.router.url === '/site/order';
-    // подписываемся на прослушку событий роута (переход на другой адрес)
-    this.router.events.subscribe((e) => {
-          // является ли событие свойством метода?
-          if (e instanceof NavigationEnd) {
-            this.isRoot = this.router.url === '/site/order';
-          }
-        }
-    )
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.isRoot = this.router.url === '/site/order';
+      }
+    })
   }
 
   ngOnDestroy() {
-    this.modal.destroy();
+    this.modal.destroy()
   }
 
-  // метод позволяющий работать с dom после его инициализации
   ngAfterViewInit() {
-    this.modal = MaterialService.initModal(this.modalRef);
+    this.modal = MaterialService.initModal(this.modalRef)
+  }
+
+  removePosition(orderPosition: OrderPositionModel) {
+    // this.order.remove(orderPosition)
   }
 
   open() {
-    this.modal.open();
+    this.modal.open()
   }
 
-  close() {
-    this.modal.close();
+  cancel() {
+    this.modal.close()
   }
 
   submit() {
-    this.modal.close();
+    this.modal.close()
   }
 
 }
