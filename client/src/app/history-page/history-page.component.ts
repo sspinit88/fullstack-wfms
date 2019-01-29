@@ -4,6 +4,7 @@ import {MaterialService} from "../shared/classes/material.service";
 import {OrdersService} from "../shared/services/orders.service";
 import {Subscription} from "rxjs/internal/Subscription";
 import {OrderModel} from "../shared/models/order.model";
+import Order = jasmine.Order;
 
 const STEP = 2;
 
