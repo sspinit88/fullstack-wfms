@@ -13,7 +13,7 @@
   <tr *ngFor="let order of orders">
     <td>{{order.order}}</td>
     <td>{{order.date | date:'dd.MM.yyyy'}}</td>
-    <td>{{order.date | date:'shortTime'}}</td>
+    <td>{{order.date | date:'hh:mm:ss'}}</td>
     <td>{{computePrice(order)}} руб.</td>
     <td>
       <button class="btn btn-small modal-trigger grey darken-1"

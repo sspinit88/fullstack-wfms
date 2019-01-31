@@ -1,7 +1,8 @@
 const Order = require('../models/Order');
 const errorHandler = require('../utils/errorHandler');
 
-module.exports.getAll = async function (req, res) {
+// (get) localhost:5000/api/order?offset=2&limit=5
+module.exports.getAll = async function(req, res) {
   const query = {
     user: req.user.id
   };
@@ -33,14 +34,14 @@ module.exports.getAll = async function (req, res) {
         .skip(+req.query.offset)
         .limit(+req.query.limit);
 
-    res.status(200).json(orders)
+    res.status(200).json(orders);
 
   } catch (e) {
     errorHandler(res, e)
   }
 };
 
-module.exports.create = async function (req, res) {
+module.exports.create = async function(req, res) {
   try {
     const lastOrder = await Order
         .findOne({user: req.user.id})
@@ -51,10 +52,11 @@ module.exports.create = async function (req, res) {
     const order = await new Order({
       list: req.body.list,
       user: req.user.id,
-      order: maxOrder + 1,
+      order: maxOrder + 1
     }).save();
-    res.status(201).json(order);
+
+    res.status(201).json(order)
   } catch (e) {
-    errorHandler(res, e);
+    errorHandler(res, e)
   }
 };

@@ -4,7 +4,7 @@ import {MaterialService} from "../shared/classes/material.service";
 import {OrdersService} from "../shared/services/orders.service";
 import {Subscription} from "rxjs/internal/Subscription";
 import {OrderModel} from "../shared/models/order.model";
-import Order = jasmine.Order;
+import {FilterModel} from "../shared/models/filter.model";
 
 const STEP = 2;
 
@@ -30,6 +30,7 @@ export class HistoryPageComponent implements OnInit, OnDestroy, AfterViewInit {
   limit: number = STEP;
 
   orders: OrderModel[] = [];
+  filter: FilterModel = {};
 
   constructor(
       private ordersService: OrdersService,
@@ -42,11 +43,15 @@ export class HistoryPageComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   private fetch() {
+    // const params = {
+    //   offset: this.offset,
+    //   limit: this.limit,
+    // };
 
-    const params = {
+    const params = Object.assign({}, this.filter, {
       offset: this.offset,
       limit: this.limit,
-    };
+    });
 
     this.aSub = this.ordersService.fetch(params)
         .subscribe(
@@ -81,4 +86,16 @@ export class HistoryPageComponent implements OnInit, OnDestroy, AfterViewInit {
     this.loading = true;
   }
 
+  applyFilter(filter: FilterModel) {
+    this.orders = []; // обнуляем все данные, которые получили ранее
+    this.offset = 0; //
+    this.reloading = true;
+    this.filter = filter;
+    this.fetch();
+  }
+
+  // осуществляем проверку на заполненность хотя бы одного поля фильтра
+  isFilttred(): boolean {
+    return Object.keys(this.filter).length;
+  }
 }
